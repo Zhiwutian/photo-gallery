@@ -21,6 +21,8 @@ After the container builds:
 pnpm dev
 ```
 
+**Database:** `pnpm db:up` is only for **host** development (Docker on your machine). Inside this dev container, Postgres is already running; `pnpm db:up` is a no-op with a short explanation. If migrations were not applied (for example you skipped `postCreate`), run `pnpm db:migrate`.
+
 **Remote / SSH:** Open the cloned folder on your remote host, then use the same **Reopen in Container** flow; the devcontainer metadata travels with the repo.
 
 **GitHub Codespaces:** Codespaces will detect `.devcontainer` and offer the same environment (subject to Codespaces quotas).

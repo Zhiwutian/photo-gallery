@@ -25,9 +25,9 @@
     "typecheck:api": "pnpm -C apps/api exec tsc --noEmit",
     "db:migrate": "pnpm -C apps/api db:migrate",
     "db:generate": "pnpm -C apps/api db:generate",
-    "db:up": "docker compose up -d --wait db",
-    "db:down": "docker compose down",
-    "db:reset": "docker compose down -v"
+    "db:up": "bash scripts/db/compose.sh up",
+    "db:down": "bash scripts/db/compose.sh down",
+    "db:reset": "bash scripts/db/compose.sh reset"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"

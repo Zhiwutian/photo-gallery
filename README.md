@@ -29,6 +29,8 @@ pnpm dev
 
 To stop Postgres (data kept in a Docker volume): `pnpm db:down`. To wipe the volume: `pnpm db:reset`.
 
+**Dev Container / Codespaces:** do **not** run `pnpm db:up` here — Postgres is already in the same compose stack, and the Docker socket is often not usable as user `node`. Use `pnpm db:migrate` if needed, then `pnpm dev`.
+
 ## Dev Container (recommended)
 
 1. Clone this repository to your machine.

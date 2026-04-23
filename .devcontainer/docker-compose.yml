@@ -29,5 +29,6 @@ services:
       - ..:/workspace:cached
     command: sleep infinity
     environment:
+      PHOTO_GALLERY_DEVCONTAINER: "1"
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/photogallery?sslmode=disable
       CORS_ORIGIN: http://localhost:5173
