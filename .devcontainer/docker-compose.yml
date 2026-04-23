@@ -1,0 +1,26 @@
+# Dev container for the drive-gallery repo alone (clone this repo and "Reopen in Container").
+# App shares the database service network stack so API can use DATABASE_URL=...@127.0.0.1:5432.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: drivegallery
+    ports:
+      - "5432:5432"
+      - "5173:5173"
+      - "8080:8080"
+
+  app:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm
+    depends_on:
+      - db
+    network_mode: service:db
+    volumes:
+      - ..:/workspaces/drive-gallery:cached
+    command: sleep infinity
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/drivegallery?sslmode=disable
+      CORS_ORIGIN: http://localhost:5173

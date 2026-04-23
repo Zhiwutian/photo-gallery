@@ -1,0 +1,22 @@
+{
+  "name": "drive-gallery",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/drive-gallery",
+  "remoteUser": "node",
+  "forwardPorts": [5173, 8080, 5432],
+  "portsAttributes": {
+    "5173": { "label": "Vite (web)" },
+    "8080": { "label": "API" },
+    "5432": { "label": "Postgres" }
+  },
+  "postCreateCommand": "corepack enable && corepack prepare pnpm@10.30.3 --activate && pnpm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "drive-gallery",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Drive-backed photo gallery (Vite + React + Tailwind, Express API, Postgres).",
+  "packageManager": "pnpm@10.30.3",
+  "type": "module",
+  "engines": {
+    "node": ">=20.19.0",
+    "pnpm": ">=10 <11"
+  },
+  "scripts": {
+    "dev": "npm-run-all --parallel --print-label dev:web dev:api",
+    "dev:web": "pnpm -C apps/web dev",
+    "dev:api": "pnpm -C apps/api dev",
+    "build": "pnpm -C apps/web build && pnpm -C apps/api build",
+    "lint": "npm-run-all --parallel --print-label lint:web lint:api",
+    "lint:web": "pnpm -C apps/web lint",
+    "lint:api": "pnpm -C apps/api lint",
+    "test": "npm-run-all --parallel --print-label test:web test:api",
+    "test:web": "pnpm -C apps/web test",
+    "test:api": "pnpm -C apps/api test",
+    "typecheck": "npm-run-all --parallel --print-label typecheck:web typecheck:api",
+    "typecheck:web": "pnpm -C apps/web exec tsc -b --noEmit",
+    "typecheck:api": "pnpm -C apps/api exec tsc --noEmit"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
