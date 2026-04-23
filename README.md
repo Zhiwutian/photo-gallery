@@ -30,6 +30,8 @@ pnpm dev
 
 Postgres runs in the compose stack; `DATABASE_URL` is set for the API container (Slice 1 will use it).
 
+More detail: **`docs/DEVCONTAINER.md`** (remote SSH, Codespaces).
+
 ## GitHub
 
 This repo is meant to live in **its own** GitHub repository (not inside `bible-support`). After cloning from GitHub, use Dev Containers or local Node as above.
