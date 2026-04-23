@@ -1,6 +1,6 @@
 # Drive gallery
 
-**Repository:** [github.com/Zhiwutian/photo-gallery](https://github.com/Zhiwutian/photo-gallery)
+**Repository:** [github.com/Zhiwutian/photo-gallery](https://github.com/Zhiwutian/photo-gallery) · **Git flow:** [`docs/GIT_FLOW.md`](docs/GIT_FLOW.md)
 
 Web photo gallery backed by **Google Drive** (see `docs/PROPOSAL.md` for the full v1 build plan and sequenced AI prompts).
 

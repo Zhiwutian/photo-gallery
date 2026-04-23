@@ -17,10 +17,17 @@ app.get("/api/health", (_req, res) => {
 
 const port = Number(process.env.PORT) || 8080;
 
-if (process.env.VITEST !== "true") {
+async function start(): Promise<void> {
+  // Delay db import so tests can import app without requiring DATABASE_URL.
+  const { verifyDatabaseConnection } = await import("./db/index.js");
+  await verifyDatabaseConnection();
   app.listen(port, () => {
     console.log(`API listening on http://127.0.0.1:${port}`);
   });
+}
+
+if (process.env.VITEST !== "true") {
+  void start();
 }
 
 export { app };
