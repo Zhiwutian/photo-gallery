@@ -72,7 +72,7 @@ For the split layout in `docs/PROPOSAL.md`, set the Vercel project **Root Direct
 - `apps/web/.env.example` — `VITE_API_BASE_URL` for split deploy  
 - `apps/api/.env.example` — `PORT`, `CORS_ORIGIN`, future OAuth/DB vars  
 
-The API loads `apps/api/.env` if present, then fills any **still-missing** variables from `apps/api/.env.example`, so `pnpm db:migrate` works in a plain terminal without exporting `DATABASE_URL` (as long as Postgres matches the example URL).
+Env loading: `apps/api/.env.example` supplies defaults for unset keys; **`apps/api/.env` overrides the shell and the example** (so a committed-free local file fixes a stale `DATABASE_URL` in your environment). If `pnpm db:migrate` fails with **password authentication failed**, another Postgres may be on `127.0.0.1:5432`, or your shell has the wrong `DATABASE_URL` — use `apps/api/.env` from the example or `unset DATABASE_URL`, then migrate again.
 
 ## License
 
