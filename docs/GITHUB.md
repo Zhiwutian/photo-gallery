@@ -1,16 +1,25 @@
-# Publishing `drive-gallery` to GitHub
+# GitHub — `photo-gallery`
 
-This repository was scaffolded **locally**. Pushing requires **your** GitHub authentication on your machine (or in CI you control). Do **not** paste personal access tokens into chat or commit them.
+**Canonical repository:** [https://github.com/Zhiwutian/photo-gallery](https://github.com/Zhiwutian/photo-gallery)
+
+Clone:
+
+```bash
+git clone https://github.com/Zhiwutian/photo-gallery.git
+cd photo-gallery
+```
+
+The sections below apply if you **fork** the repo or add a second remote. Do **not** paste personal access tokens into chat or commit them.
 
 ## Option A — GitHub CLI (`gh`)
 
 1. [Install GitHub CLI](https://cli.github.com/) and run `gh auth login`.
-2. From the `drive-gallery` folder:
+2. From the `photo-gallery` folder:
 
 ```bash
-git remote add origin https://github.com/YOUR_USER/drive-gallery.git
+git remote add origin https://github.com/YOUR_USER/photo-gallery.git
 # or SSH:
-# git remote add origin git@github.com:YOUR_USER/drive-gallery.git
+# git remote add origin git@github.com:YOUR_USER/photo-gallery.git
 
 git push -u origin main
 ```
@@ -18,18 +27,18 @@ git push -u origin main
 Create the empty repo first on GitHub (**New repository**), or:
 
 ```bash
-gh repo create drive-gallery --private --source=. --remote=origin --push
+gh repo create photo-gallery --private --source=. --remote=origin --push
 ```
 
 (Adjust `--public` / `--private` and name as needed.)
 
 ## Option B — GitHub website
 
-1. Create a new repository (no README, no .gitignore) named e.g. `drive-gallery`.
+1. Create a new repository (no README, no .gitignore) named e.g. `photo-gallery`.
 2. Add remote and push:
 
 ```bash
-git remote add origin https://github.com/YOUR_USER/drive-gallery.git
+git remote add origin https://github.com/YOUR_USER/photo-gallery.git
 git branch -M main
 git push -u origin main
 ```

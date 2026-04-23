@@ -1,8 +1,8 @@
 {
-  "name": "drive-gallery",
+  "name": "photo-gallery",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
-  "workspaceFolder": "/workspaces/drive-gallery",
+  "workspaceFolder": "/workspace",
   "remoteUser": "node",
   "forwardPorts": [5173, 8080, 5432],
   "portsAttributes": {

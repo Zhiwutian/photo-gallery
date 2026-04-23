@@ -2,7 +2,7 @@
 
 This repository includes **`.devcontainer/`** so you can develop entirely inside Docker:
 
-1. **Clone** this repo (by itself — not required to live inside another project).
+1. **Clone** [Zhiwutian/photo-gallery](https://github.com/Zhiwutian/photo-gallery) (or your fork).
 2. Open the **repository root** in VS Code or Cursor.
 3. Run **Dev Containers: Reopen in Container**.
 
@@ -12,7 +12,9 @@ What you get:
 - **Postgres 16** on `127.0.0.1:5432` inside the compose stack, with `DATABASE_URL` preset for the API container
 - **Ports:** `5173` (Vite), `8080` (API), `5432` (DB) forwarded to your host
 
-After the container builds, from `/workspaces/drive-gallery`:
+The repo is mounted at **`/workspace`** inside the container (independent of the folder name on your host).
+
+After the container builds:
 
 ```bash
 pnpm dev

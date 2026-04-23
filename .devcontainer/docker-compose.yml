@@ -1,5 +1,5 @@
-# Dev container for the drive-gallery repo alone (clone this repo and "Reopen in Container").
-# App shares the database service network stack so API can use DATABASE_URL=...@127.0.0.1:5432.
+# Dev container: clone https://github.com/Zhiwutian/photo-gallery and "Reopen in Container".
+# Repo root is mounted at /workspace (works whether the folder is named photo-gallery or not).
 services:
   db:
     image: postgres:16-alpine
@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: drivegallery
+      POSTGRES_DB: photogallery
     ports:
       - "5432:5432"
       - "5173:5173"
@@ -19,8 +19,8 @@ services:
       - db
     network_mode: service:db
     volumes:
-      - ..:/workspaces/drive-gallery:cached
+      - ..:/workspace:cached
     command: sleep infinity
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/drivegallery?sslmode=disable
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/photogallery?sslmode=disable
       CORS_ORIGIN: http://localhost:5173

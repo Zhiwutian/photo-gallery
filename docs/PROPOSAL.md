@@ -501,5 +501,5 @@ Save as `.github/pull_request_template.md` in the gallery repo (adapt names).
 ## Appendix — Minimal “resume prompt” if a thread is lost
 
 ```text
-Continue the drive gallery repo per docs/proposals/drive-gallery-v1-ai-build-proposal.md. Last completed slice: [N]. Next slice: [N+1]. Run full lint/test before committing. Do not implement features outside that slice.
+Continue the photo-gallery repo per docs/PROPOSAL.md (this file). Last completed slice: [N]. Next slice: [N+1]. Run full lint/test before committing. Do not implement features outside that slice.
 ```

@@ -1,5 +1,7 @@
 # Drive gallery
 
+**Repository:** [github.com/Zhiwutian/photo-gallery](https://github.com/Zhiwutian/photo-gallery)
+
 Web photo gallery backed by **Google Drive** (see `docs/PROPOSAL.md` for the full v1 build plan and sequenced AI prompts).
 
 **Stack (bootstrap):**
@@ -13,7 +15,8 @@ Web photo gallery backed by **Google Drive** (see `docs/PROPOSAL.md` for the ful
 Requirements: **Node 20.19+** or **22.12+** (Vite 7), **pnpm 10** (`corepack enable`). The dev container uses **Node 22**.
 
 ```bash
-cd drive-gallery
+git clone https://github.com/Zhiwutian/photo-gallery.git
+cd photo-gallery
 corepack enable && pnpm install
 pnpm dev
 ```
@@ -34,9 +37,9 @@ More detail: **`docs/DEVCONTAINER.md`** (remote SSH, Codespaces).
 
 ## GitHub
 
-This repo is meant to live in **its own** GitHub repository (not inside `bible-support`). After cloning from GitHub, use Dev Containers or local Node as above.
+Canonical remote: **https://github.com/Zhiwutian/photo-gallery**. This app is **not** part of the bible-support monorepo; clone it on its own.
 
-See **`docs/GITHUB.md`** for creating the remote and pushing (this environment may not have your credentials).
+See **`docs/GITHUB.md`** for remotes, forks, and contribution workflow.
 
 ## Vercel (later)
 
