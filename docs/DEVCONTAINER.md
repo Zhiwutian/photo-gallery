@@ -11,6 +11,7 @@ What you get:
 - **Node.js 22** (Microsoft `typescript-node` image)
 - **Postgres 16** on `127.0.0.1:5432` inside the compose stack, with `DATABASE_URL` preset for the API container
 - **Ports:** `5173` (Vite), `8080` (API), `5432` (DB) forwarded to your host
+- **Ordering:** the DB service has a `healthcheck`; the dev container `app` service waits until Postgres is ready before starting, so `postCreateCommand` can run **`pnpm db:migrate`** safely after `pnpm install`.
 
 The repo is mounted at **`/workspace`** inside the container (independent of the folder name on your host).
 

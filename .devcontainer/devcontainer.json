@@ -10,7 +10,7 @@
     "8080": { "label": "API" },
     "5432": { "label": "Postgres" }
   },
-  "postCreateCommand": "corepack enable && corepack prepare pnpm@10.30.3 --activate && pnpm install",
+  "postCreateCommand": "corepack enable && corepack prepare pnpm@10.30.3 --activate && pnpm install && pnpm db:migrate",
   "customizations": {
     "vscode": {
       "extensions": [

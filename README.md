@@ -12,26 +12,31 @@ Web photo gallery backed by **Google Drive** (see `docs/PROPOSAL.md` for the ful
 
 ## Quick start (local machine)
 
-Requirements: **Node 20.19+** or **22.12+** (Vite 7), **pnpm 10** (`corepack enable`). The dev container uses **Node 22**.
+Requirements: **Node 20.19+** or **22.12+** (Vite 7), **pnpm 10** (`corepack enable`), **Docker** (for Postgres). The dev container uses **Node 22**.
 
 ```bash
 git clone https://github.com/Zhiwutian/photo-gallery.git
 cd photo-gallery
 corepack enable && pnpm install
+pnpm db:up                    # Postgres 16 on localhost:5432 (see docker-compose.yml)
+cp apps/api/.env.example apps/api/.env   # DATABASE_URL matches compose by default
+pnpm db:migrate
 pnpm dev
 ```
 
 - Web: <http://localhost:5173>  
 - API: <http://localhost:8080> (Vite proxies `/api` → API in dev)
 
+To stop Postgres (data kept in a Docker volume): `pnpm db:down`. To wipe the volume: `pnpm db:reset`.
+
 ## Dev Container (recommended)
 
 1. Clone this repository to your machine.
 2. Open the **folder** in VS Code / Cursor.
 3. **Dev Containers: Reopen in Container**.
-4. Wait for `postCreateCommand` (`pnpm install`), then run `pnpm dev`.
+4. Wait for `postCreateCommand` (`pnpm install` and **`pnpm db:migrate`**), then run `pnpm dev`.
 
-Postgres runs in the compose stack; `DATABASE_URL` is set for the API container (Slice 1 will use it).
+Postgres runs in the compose stack with a healthcheck; the app container waits until the DB is ready. `DATABASE_URL` is set for the API (see `.devcontainer/docker-compose.yml`).
 
 More detail: **`docs/DEVCONTAINER.md`** (remote SSH, Codespaces).
 
@@ -54,6 +59,11 @@ For the split layout in `docs/PROPOSAL.md`, set the Vercel project **Root Direct
 | `pnpm lint`   | ESLint                               |
 | `pnpm test`   | Vitest (web + api)                   |
 | `pnpm typecheck` | `tsc --noEmit` for both packages  |
+| `pnpm db:up`  | Start local Postgres (`docker compose`) |
+| `pnpm db:down` | Stop compose stack (keeps volume) |
+| `pnpm db:reset` | Stop and remove Postgres volume   |
+| `pnpm db:migrate` | Apply Drizzle SQL migrations     |
+| `pnpm db:generate` | Regenerate migrations from schema |
 
 ## Env templates
 

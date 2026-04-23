@@ -24,7 +24,10 @@
     "typecheck:web": "pnpm -C apps/web exec tsc -b --noEmit",
     "typecheck:api": "pnpm -C apps/api exec tsc --noEmit",
     "db:migrate": "pnpm -C apps/api db:migrate",
-    "db:generate": "pnpm -C apps/api db:generate"
+    "db:generate": "pnpm -C apps/api db:generate",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
