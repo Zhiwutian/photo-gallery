@@ -36,6 +36,8 @@ jobs:
           cache-dependency-path: pnpm-lock.yaml
       - name: Install
         run: corepack enable && pnpm install --frozen-lockfile
+      - name: Database migrations
+        run: pnpm db:migrate
       - name: Lint
         run: pnpm lint
       - name: Typecheck

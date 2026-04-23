@@ -22,7 +22,9 @@
     "test:api": "pnpm -C apps/api test",
     "typecheck": "npm-run-all --parallel --print-label typecheck:web typecheck:api",
     "typecheck:web": "pnpm -C apps/web exec tsc -b --noEmit",
-    "typecheck:api": "pnpm -C apps/api exec tsc --noEmit"
+    "typecheck:api": "pnpm -C apps/api exec tsc --noEmit",
+    "db:migrate": "pnpm -C apps/api db:migrate",
+    "db:generate": "pnpm -C apps/api db:generate"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"

@@ -4,6 +4,9 @@ export default defineConfig({
   test: {
     environment: "node",
     globals: false,
-    env: { VITEST: "true" },
+    env: {
+      VITEST: "true",
+    },
+    fileParallelism: false,
   },
 });
