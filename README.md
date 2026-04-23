@@ -72,6 +72,8 @@ For the split layout in `docs/PROPOSAL.md`, set the Vercel project **Root Direct
 - `apps/web/.env.example` — `VITE_API_BASE_URL` for split deploy  
 - `apps/api/.env.example` — `PORT`, `CORS_ORIGIN`, future OAuth/DB vars  
 
+The API loads `apps/api/.env` if present, then fills any **still-missing** variables from `apps/api/.env.example`, so `pnpm db:migrate` works in a plain terminal without exporting `DATABASE_URL` (as long as Postgres matches the example URL).
+
 ## License
 
 Private / unlicensed until you add one.

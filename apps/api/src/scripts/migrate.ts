@@ -1,3 +1,4 @@
+import "../load-env.js";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
