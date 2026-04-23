@@ -38,6 +38,10 @@ This repo is meant to live in **its own** GitHub repository (not inside `bible-s
 
 See **`docs/GITHUB.md`** for creating the remote and pushing (this environment may not have your credentials).
 
+## Vercel (later)
+
+For the split layout in `docs/PROPOSAL.md`, set the Vercel project **Root Directory** to **`apps/web`** and configure `VITE_API_BASE_URL` to your Render API URL. `apps/web/vercel.json` already rewrites client-side routes to `index.html`.
+
 ## Scripts
 
 | Script        | Description                          |
