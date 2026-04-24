@@ -46,6 +46,8 @@ More detail: **`docs/DEVCONTAINER.md`** (remote SSH, Codespaces).
 
 Canonical remote: **https://github.com/Zhiwutian/photo-gallery**. This app is **not** part of the bible-support monorepo; clone it on its own.
 
+If you still keep a copy under **`/workspace/drive-gallery`** while using the **bible-support** devcontainer, read **`docs/development/nested-workspace-bible-support.md`** — that environment’s Postgres uses different credentials than this repo’s defaults.
+
 See **`docs/GITHUB.md`** for remotes, forks, and contribution workflow.
 
 ## Vercel (later)
