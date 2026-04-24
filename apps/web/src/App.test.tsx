@@ -4,12 +4,19 @@ import App from "./App";
 
 describe("App", () => {
   beforeEach(() => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn().mockResolvedValue({
+    const fetchMock = vi.fn();
+    fetchMock
+      .mockResolvedValueOnce({
         ok: true,
         json: async () => ({ ok: true }),
-      } as Response),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: false,
+        json: async () => ({ error: "unauthorized" }),
+      } as Response);
+    vi.stubGlobal(
+      "fetch",
+      fetchMock,
     );
   });
 

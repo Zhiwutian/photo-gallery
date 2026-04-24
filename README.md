@@ -42,6 +42,16 @@ Postgres runs in the compose stack with a healthcheck; the app container waits u
 
 More detail: **`docs/DEVCONTAINER.md`** (remote SSH, Codespaces).
 
+## OAuth (Slice 2)
+
+- API routes:
+  - `GET /api/auth/google/start`
+  - `GET /api/auth/google/callback`
+  - `GET /api/auth/me`
+  - `POST /api/auth/logout`
+- Setup guide: **`docs/deployment/google-oauth.md`**
+- API env: copy `apps/api/.env.example` to `apps/api/.env` and fill Google + session values.
+
 ## GitHub
 
 Canonical remote: **https://github.com/Zhiwutian/photo-gallery**. This app is **not** part of the bible-support monorepo; clone it on its own.

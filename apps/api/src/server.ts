@@ -1,8 +1,10 @@
 import "./load-env.js";
 import cors from "cors";
 import express from "express";
+import { createAuthRouter } from "./auth/router.js";
 
 const app = express();
+app.use(express.json());
 
 const webOrigin = process.env.CORS_ORIGIN ?? "http://localhost:5173";
 app.use(
@@ -15,6 +17,7 @@ app.use(
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
+app.use("/api/auth", createAuthRouter());
 
 const port = Number(process.env.PORT) || 8080;
 
