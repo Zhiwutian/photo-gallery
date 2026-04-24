@@ -1,5 +1,7 @@
 import type { Request, Response } from "express";
 import { Router } from "express";
+import { readCookie } from "./cookies.js";
+import { getAuthEnv } from "./env.js";
 import {
   createGoogleAuthUrl,
   exchangeAuthCode,
@@ -7,6 +9,7 @@ import {
   randomToken,
 } from "./google-oauth.js";
 import { clearCookie, createSignedPayload, parseSignedPayload, setSessionCookie } from "./session.js";
+import { parseGallerySessionCookie } from "./session-request.js";
 import { findSessionUser, upsertOAuthUser } from "./store.js";
 
 type OAuthCookiePayload = {
@@ -27,61 +30,11 @@ const defaultDeps: AuthRouterDeps = {
   findSessionUser,
 };
 
-function required(name: string): string {
-  const value = process.env[name]?.trim();
-  if (!value) {
-    throw new Error(`Missing required auth env: ${name}`);
-  }
-  return value;
-}
-
-function authConfig() {
-  return {
-    clientId: required("GOOGLE_CLIENT_ID"),
-    clientSecret: required("GOOGLE_CLIENT_SECRET"),
-    redirectUri: required("GOOGLE_OAUTH_REDIRECT_URI"),
-    webOrigin: required("PUBLIC_WEB_ORIGIN"),
-    sessionSecret: required("SESSION_SECRET"),
-    sessionCookieName: process.env.SESSION_COOKIE_NAME?.trim() || "photo_gallery_session",
-    oauthCookieName: process.env.OAUTH_STATE_COOKIE_NAME?.trim() || "photo_gallery_oauth",
-    scope:
-      process.env.GOOGLE_OAUTH_SCOPE?.trim() ||
-      "openid profile email https://www.googleapis.com/auth/drive.readonly",
-    sessionTtlSec: Number(process.env.SESSION_TTL_SECONDS ?? 60 * 60 * 24 * 7),
-    oauthStateTtlSec: Number(process.env.OAUTH_STATE_TTL_SECONDS ?? 10 * 60),
-    isProd: process.env.NODE_ENV === "production",
-  };
-}
-
-function readCookie(req: Request, name: string): string | undefined {
-  const raw = req.headers.cookie;
-  if (!raw) {
-    return undefined;
-  }
-  const parts = raw.split(";");
-  for (const part of parts) {
-    const [k, ...rest] = part.trim().split("=");
-    if (k === name) {
-      return decodeURIComponent(rest.join("="));
-    }
-  }
-  return undefined;
-}
-
-function sessionPayload(req: Request, secret: string, cookieName: string) {
-  return parseSignedPayload<{
-    userId: string;
-    googleSub: string;
-    refreshTokenVersion: number;
-    exp: number;
-  }>(readCookie(req, cookieName), secret);
-}
-
 export function createAuthRouter(deps: AuthRouterDeps = defaultDeps): Router {
   const router = Router();
 
   router.get("/google/start", (_req, res) => {
-    const cfg = authConfig();
+    const cfg = getAuthEnv();
     const state = randomToken(24);
     const verifier = randomToken(48);
 
@@ -111,7 +64,7 @@ export function createAuthRouter(deps: AuthRouterDeps = defaultDeps): Router {
   });
 
   router.get("/google/callback", async (req, res) => {
-    const cfg = authConfig();
+    const cfg = getAuthEnv();
     const code = typeof req.query.code === "string" ? req.query.code : "";
     const state = typeof req.query.state === "string" ? req.query.state : "";
 
@@ -155,8 +108,8 @@ export function createAuthRouter(deps: AuthRouterDeps = defaultDeps): Router {
   });
 
   router.get("/me", async (req: Request, res: Response) => {
-    const cfg = authConfig();
-    const session = sessionPayload(req, cfg.sessionSecret, cfg.sessionCookieName);
+    const cfg = getAuthEnv();
+    const session = parseGallerySessionCookie(req, cfg.sessionSecret, cfg.sessionCookieName);
     if (!session) {
       res.status(401).json({ error: "Not authenticated." });
       return;
@@ -175,7 +128,7 @@ export function createAuthRouter(deps: AuthRouterDeps = defaultDeps): Router {
   });
 
   router.post("/logout", (_req, res) => {
-    const cfg = authConfig();
+    const cfg = getAuthEnv();
     clearCookie(res, cfg.sessionCookieName, cfg.isProd);
     clearCookie(res, cfg.oauthCookieName, cfg.isProd);
     res.status(204).send();

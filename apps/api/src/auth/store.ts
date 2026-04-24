@@ -1,5 +1,5 @@
 import { and, eq } from "drizzle-orm";
-import { encryptSecret } from "./crypto.js";
+import { decryptSecret, encryptSecret } from "./crypto.js";
 
 export type AuthUser = {
   id: string;
@@ -70,4 +70,45 @@ export async function findSessionUser(
     .limit(1);
 
   return row ?? null;
+}
+
+export type UserWithRefresh = AuthUser & { refreshToken: string };
+
+export async function findUserWithRefreshToken(
+  userId: string,
+  googleSub: string,
+  refreshTokenVersion: number,
+): Promise<UserWithRefresh | null> {
+  const { db, users } = await loadDb();
+  const [row] = await db
+    .select({
+      id: users.id,
+      googleSub: users.googleSub,
+      refreshTokenVersion: users.refreshTokenVersion,
+      encryptedRefreshToken: users.encryptedRefreshToken,
+    })
+    .from(users)
+    .where(
+      and(
+        eq(users.id, userId),
+        eq(users.googleSub, googleSub),
+        eq(users.refreshTokenVersion, refreshTokenVersion),
+      ),
+    )
+    .limit(1);
+
+  if (!row?.encryptedRefreshToken) {
+    return null;
+  }
+  try {
+    const refreshToken = decryptSecret(row.encryptedRefreshToken);
+    return {
+      id: row.id,
+      googleSub: row.googleSub,
+      refreshTokenVersion: row.refreshTokenVersion,
+      refreshToken,
+    };
+  } catch {
+    return null;
+  }
 }

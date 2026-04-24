@@ -52,6 +52,15 @@ More detail: **`docs/DEVCONTAINER.md`** (remote SSH, Codespaces).
 - Setup guide: **`docs/deployment/google-oauth.md`**
 - API env: copy `apps/api/.env.example` to `apps/api/.env` and fill Google + session values.
 
+## Drive gallery (Slice 3)
+
+- **Web routes:** `/photos` (enter a Drive folder ID), `/photos/folder/:folderId` (grid + lightbox; `fetch` uses `credentials: "include"`).
+- **API routes** (session required; refresh token from Slice 2):
+  - `GET /api/drive/folders/:folderId/files?pageToken=&pageSize=&q=`
+  - `GET /api/drive/files/:fileId/meta?folderId=`
+  - `GET /api/drive/files/:fileId/media?folderId=` (streams bytes only after a parent-chain check under `folderId`)
+- Optional: `DRIVE_RATE_LIMIT_MAX` (default 240/min per IP) on the API.
+
 ## GitHub
 
 Canonical remote: **https://github.com/Zhiwutian/photo-gallery**. This app is **not** part of the bible-support monorepo; clone it on its own.

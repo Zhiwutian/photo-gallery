@@ -2,6 +2,7 @@ import "./load-env.js";
 import cors from "cors";
 import express from "express";
 import { createAuthRouter } from "./auth/router.js";
+import { createDriveRouter } from "./drive/router.js";
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,7 @@ app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
 app.use("/api/auth", createAuthRouter());
+app.use("/api/drive", createDriveRouter());
 
 const port = Number(process.env.PORT) || 8080;
 

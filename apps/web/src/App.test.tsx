@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "./App";
 
@@ -14,18 +15,19 @@ describe("App", () => {
         ok: false,
         json: async () => ({ error: "unauthorized" }),
       } as Response);
-    vi.stubGlobal(
-      "fetch",
-      fetchMock,
-    );
+    vi.stubGlobal("fetch", fetchMock);
   });
 
   afterEach(() => {
     vi.unstubAllGlobals();
   });
 
-  it("renders title", () => {
-    render(<App />);
+  it("renders title on home", () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>,
+    );
     expect(screen.getByRole("heading", { name: /drive gallery/i })).toBeInTheDocument();
   });
 });
